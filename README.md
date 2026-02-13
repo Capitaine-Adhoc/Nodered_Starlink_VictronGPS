@@ -1,4 +1,4 @@
-# Nodered_Starlink_VictronGPS
+# NodeRed_Starlink_VictronGPS
 
 A Node-RED flow that integrates Starlink GPS data with Victron energy systems, providing location awareness for your off-grid or mobile power setup.
 
