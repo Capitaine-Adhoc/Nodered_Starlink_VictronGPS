@@ -74,4 +74,4 @@ Once deployed:
 - Starlink API not responding: Check network connection to Starlink router
 
 ## For other systems, download from:
--->  https://github.com/fullstorydev/grpcurl/releases
+- https://github.com/fullstorydev/grpcurl/releases
