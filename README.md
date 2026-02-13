@@ -49,10 +49,10 @@ This Node-RED flow collects GPS coordinates from the Starlink API and makes them
 1. **Starlink API Node**:
    - Verify the API endpoint is correct for your Starlink setup
    - Default assumes standard local IP (192.168.100.1)
+   - Default port is 9200 (standard Dishy gRPC port)
 
-2. **Victron gRPC Node**:
-   - For the moment native gRPC call with node-red-contrib-grpc is bugged... 
-   - Default port is 9200 (standard Victron gRPC port)
+2. **Victron Node**:
+   - For the moment native gRPC call with node-red-contrib-grpc is buggy... 
    - Until NodeRed x Victron x gRPC is not fixed this flow will rely on grpcurl cmdline
 
 3. **Debug Nodes**:
