@@ -1,5 +1,431 @@
 [
     {
+        "id": "e4e886c2dd34adcd",
+        "type": "tab",
+        "label": "Starlink_VictronGPS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4a29e547b5023b78",
+        "type": "exec",
+        "z": "e4e886c2dd34adcd",
+        "command": "/tmp/grpcurl -plaintext -d {\\\"get_location\\\":{}} 192.168.100.1:9200 SpaceX.API.Device.Device/Handle 2>/dev/null || echo \"{}\"",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Starlink API getLocation",
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "65d3cf387370b530",
+                "e2d4e2101a3fb08f"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8405f2b9f623a32e",
+        "type": "inject",
+        "z": "e4e886c2dd34adcd",
+        "name": "Call API",
+        "props": [],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 460,
+        "wires": [
+            [
+                "4a29e547b5023b78"
+            ]
+        ],
+        "icon": "font-awesome/fa-arrow-right"
+    },
+    {
+        "id": "65d3cf387370b530",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Raw Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a7fa5f5b55e28502",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "JSON API Output",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e2d4e2101a3fb08f",
+        "type": "json",
+        "z": "e4e886c2dd34adcd",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 610,
+        "y": 560,
+        "wires": [
+            [
+                "a7fa5f5b55e28502",
+                "a4f0a11828649309",
+                "5e1e994ebe7eeda4",
+                "0b1eab9f45d07a27"
+            ]
+        ]
+    },
+    {
+        "id": "d3e572f1f27a30cd",
+        "type": "victron-virtual",
+        "z": "e4e886c2dd34adcd",
+        "name": "Starlink2GPS",
+        "device": "gps",
+        "default_values": false,
+        "battery_capacity": 25,
+        "include_battery_temperature": false,
+        "grid_nrofphases": 1,
+        "include_motor_temp": false,
+        "include_controller_temp": false,
+        "include_coolant_temp": false,
+        "include_motor_rpm": true,
+        "include_motor_direction": true,
+        "position": 0,
+        "pvinverter_nrofphases": 1,
+        "fluid_type": 0,
+        "include_tank_battery": false,
+        "include_tank_temperature": false,
+        "tank_battery_voltage": 3.3,
+        "tank_capacity": 0.2,
+        "temperature_type": 2,
+        "include_humidity": false,
+        "include_pressure": false,
+        "include_temp_battery": false,
+        "temp_battery_voltage": 3.3,
+        "x": 330,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "dd3f28cf11ef744e",
+        "type": "victron-output-custom",
+        "z": "e4e886c2dd34adcd",
+        "service": "com.victronenergy.gps/101",
+        "path": "/Position/Latitude",
+        "serviceObj": {
+            "service": "com.victronenergy.gps/101",
+            "name": "Starlink2GPS (101)"
+        },
+        "pathObj": {
+            "path": "/Position/Latitude",
+            "name": "/Position/Latitude",
+            "type": "object",
+            "value": null
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1150,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "6815b7f7ad2b2950",
+        "type": "victron-output-custom",
+        "z": "e4e886c2dd34adcd",
+        "service": "com.victronenergy.gps/101",
+        "path": "/Position/Longitude",
+        "serviceObj": {
+            "service": "com.victronenergy.gps/101",
+            "name": "Starlink2GPS (101)"
+        },
+        "pathObj": {
+            "path": "/Position/Longitude",
+            "name": "/Position/Longitude",
+            "type": "object",
+            "value": null
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1160,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "4063652248397d18",
+        "type": "inject",
+        "z": "e4e886c2dd34adcd",
+        "name": "self_enable GPS Fix",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "str",
+        "x": 800,
+        "y": 900,
+        "wires": [
+            [
+                "5bfa5e64cda616ce"
+            ]
+        ]
+    },
+    {
+        "id": "5bfa5e64cda616ce",
+        "type": "victron-output-custom",
+        "z": "e4e886c2dd34adcd",
+        "service": "com.victronenergy.gps/101",
+        "path": "/Fix",
+        "serviceObj": {
+            "service": "com.victronenergy.gps/101",
+            "name": "Starlink2GPS (101)"
+        },
+        "pathObj": {
+            "path": "/Fix",
+            "name": "/Fix",
+            "type": "object",
+            "value": null
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1110,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "576b08de4ef76546",
+        "type": "victron-output-custom",
+        "z": "e4e886c2dd34adcd",
+        "service": "com.victronenergy.gps/101",
+        "path": "/Altitude",
+        "serviceObj": {
+            "service": "com.victronenergy.gps/101",
+            "name": "Starlink2GPS (101)"
+        },
+        "pathObj": {
+            "path": "/Altitude",
+            "name": "/Altitude",
+            "type": "object",
+            "value": null
+        },
+        "name": "",
+        "onlyChanges": false,
+        "x": 1130,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "a4f0a11828649309",
+        "type": "function",
+        "z": "e4e886c2dd34adcd",
+        "name": "Get Latitude",
+        "func": "// Get payload\nlet data = msg.payload;\nlet latitude;\n\n// Check data and extract latitude\nif (data && data.getLocation && data.getLocation.lla) {\n    latitude = data.getLocation.lla.lat;\n    // Store the valid value in context\n    flow.set('last_valid_latitude', latitude);\n} else {\n    // Use last stored value if data check fails\n    latitude = flow.get('last_valid_latitude') || null; // default if not set\n}\n\nmsg.payload = latitude;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "dd3f28cf11ef744e",
+                "c3807ec4f72e55ed"
+            ]
+        ]
+    },
+    {
+        "id": "5e1e994ebe7eeda4",
+        "type": "function",
+        "z": "e4e886c2dd34adcd",
+        "name": "Get Longitude",
+        "func": "// Get payload\nlet data = msg.payload;\nlet longitude;\n\n// Check data and extract longitude\nif (data && data.getLocation && data.getLocation.lla) {\n    longitude = data.getLocation.lla.lon;\n    // Store the valid value in context\n    flow.set('last_valid_longitude', longitude);\n} else {\n    // Use last stored value if data check fails\n    longitude = flow.get('last_valid_longitude') || null; // default if not set\n}\n\nmsg.payload = longitude;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 720,
+        "wires": [
+            [
+                "6815b7f7ad2b2950",
+                "960f81b3c06de3b2"
+            ]
+        ]
+    },
+    {
+        "id": "0b1eab9f45d07a27",
+        "type": "function",
+        "z": "e4e886c2dd34adcd",
+        "name": "Get Altitude",
+        "func": "// Get payload\nlet data = msg.payload;\nlet altitude;\n\n// Check data and extract longitude\nif (data && data.getLocation && data.getLocation.lla) {\n    altitude = data.getLocation.lla.alt;\n    // Store the valid value in context\n    flow.set('last_valid_altitude', altitude);\n} else {\n    // Use last stored value if data check fails\n    altitude = flow.get('last_valid_altitude') || null; // default if not set\n}\n\nmsg.payload = altitude;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 840,
+        "wires": [
+            [
+                "576b08de4ef76546",
+                "e56529847875be10"
+            ]
+        ]
+    },
+    {
+        "id": "c3807ec4f72e55ed",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Debug Latitude value",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "960f81b3c06de3b2",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Debug Longitude value",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "e56529847875be10",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Debug Altitude value",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "a1b6b0464c61493a",
+        "type": "grpc-call",
+        "z": "e4e886c2dd34adcd",
+        "name": "",
+        "server": "94a55b300af1cc51",
+        "service": "Device",
+        "method": "Handle",
+        "chain": "",
+        "key": "",
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "23764dcee5d42826"
+            ]
+        ]
+    },
+    {
+        "id": "4ef781f2fcd539da",
+        "type": "inject",
+        "z": "e4e886c2dd34adcd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"get_location\":{}}",
+        "payloadType": "str",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "a1b6b0464c61493a"
+            ]
+        ]
+    },
+    {
+        "id": "23764dcee5d42826",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Empty output then NodeRed crash ",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 80,
+        "wires": []
+    },
+    {
         "id": "77705cf2bbc9bef7",
         "type": "comment",
         "z": "e4e886c2dd34adcd",
@@ -8,5 +434,185 @@
         "x": 260,
         "y": 40,
         "wires": []
+    },
+    {
+        "id": "52d45009722bc0b8",
+        "type": "comment",
+        "z": "e4e886c2dd34adcd",
+        "name": "Install grpcurl cmd line tool from internet",
+        "info": "",
+        "x": 200,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "506262b476b3913b",
+        "type": "exec",
+        "z": "e4e886c2dd34adcd",
+        "command": "/tmp/grpcurl -version  2>/dev/null || echo \"failed\"",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Is grpcurl installed ?",
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "85f728e4e84f3822",
+                "0cd31a05b9dc8003"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0676fcb10f450106",
+        "type": "comment",
+        "z": "e4e886c2dd34adcd",
+        "name": "Get geolocation from Starlink API",
+        "info": "",
+        "x": 170,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4d2ea41a346c24e9",
+        "type": "exec",
+        "z": "e4e886c2dd34adcd",
+        "command": "cd /tmp && wget https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcurl_1.9.3_linux_armv7.tar.gz && tar -zxf grpcurl_1.9.3_linux_armv7.tar.gz",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Download grpcurl armv7 in /tmp",
+        "x": 1010,
+        "y": 200,
+        "wires": [
+            [],
+            [],
+            [
+                "0cd31a05b9dc8003"
+            ]
+        ]
+    },
+    {
+        "id": "1956ae3e938ac310",
+        "type": "inject",
+        "z": "e4e886c2dd34adcd",
+        "name": "Test & install grpcurl",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "506262b476b3913b"
+            ]
+        ],
+        "icon": "font-awesome/fa-arrow-right"
+    },
+    {
+        "id": "0cd31a05b9dc8003",
+        "type": "debug",
+        "z": "e4e886c2dd34adcd",
+        "name": "Debug install grpcurl ",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "85f728e4e84f3822",
+        "type": "function",
+        "z": "e4e886c2dd34adcd",
+        "name": "Check if the output is \"failed\"",
+        "func": "// Check if gprcurl is installed\nif (msg.payload.includes(\"failed\")) {\n    msg.payload = \"Check failed try install grpcurl\";\n    return msg; // If \"fail\" is found, goes to next node\n} else {\n    return null; // If not stop\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "0cd31a05b9dc8003",
+                "4d2ea41a346c24e9"
+            ]
+        ]
+    },
+    {
+        "id": "18d7a50fc58f2d69",
+        "type": "exec",
+        "z": "e4e886c2dd34adcd",
+        "command": "rm -fr /tmp/grpcurl*",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Remove grpcurl from /tmp",
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [],
+            [],
+            [
+                "0cd31a05b9dc8003"
+            ]
+        ]
+    },
+    {
+        "id": "29aa56c965bd095a",
+        "type": "inject",
+        "z": "e4e886c2dd34adcd",
+        "name": "Remove grpcurl",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "18d7a50fc58f2d69"
+            ]
+        ],
+        "icon": "font-awesome/fa-arrow-right"
+    },
+    {
+        "id": "94a55b300af1cc51",
+        "type": "grpc-server",
+        "port": "9200",
+        "name": "StarlinkAntenna",
+        "server": "192.168.100.1",
+        "protoFile": "syntax = \"proto3\";\n\npackage SpaceX.API.Device;\n\nenum PositionSource {\n  AUTO = 0;\n  NONE = 1;\n  UT_INFO = 2;\n  EXTERNAL = 3;\n  GPS = 4;\n  STARLINK = 5;\n  GNC_GPS = 6;\n  GNC_PNT = 7;\n  GNC_FUSED = 8;\n  GNC_RAW = 9;\n}\n\nmessage DeviceInfo {\n\toptional string id = 1;\n\toptional string hardware_version = 2;\n\toptional string software_version = 3;\n\toptional string country_code = 4;\n\toptional int32 utc_offset_s = 5;\n}\n\nmessage GetDeviceInfoRequest {\n}\n\nmessage GetDeviceInfoResponse {\n\toptional DeviceInfo device_info = 1;\n}\n\nmessage LLAPosition {\n  double lat = 1;\n  double lon = 2;\n  double alt = 3;\n}\n\nmessage GetLocationRequest {\n  PositionSource source = 1;\n}\n\nmessage GetLocationResponse {\n  LLAPosition lla = 1;\n  PositionSource source = 3;\n  double sigma_m = 4;\n  reserved 2;\n  reserved \"ecef\";\n}\n\nmessage Status {\n  int32 code = 1;\n  string message = 2;\n}\n\nservice Device {\n  rpc Handle ( Request ) returns ( Response );\n}\n\nmessage Request {\n  uint64 id = 1;\n  string target_id = 13;\n  uint64 epoch_id = 14;\n  oneof request {\n    GetDeviceInfoRequest get_device_info = 1008;\n    GetLocationRequest get_location = 1017;\n  }\n}\n\nmessage Response {\n  uint64 id = 1;\n  Status status = 2;\n  uint64 api_version = 3;\n  oneof response {\n    GetDeviceInfoResponse get_device_info = 1004;\n    GetLocationResponse location = 1017;\n  }\n}",
+        "ca": "",
+        "chain": "",
+        "key": "",
+        "mutualTls": false,
+        "ssl": false,
+        "selfsigned": false,
+        "localServer": false
     }
 ]
