@@ -1,0 +1,12 @@
+[
+    {
+        "id": "77705cf2bbc9bef7",
+        "type": "comment",
+        "z": "e4e886c2dd34adcd",
+        "name": "Should work.. But a bug affect GRPC / Victron / Nodered .....",
+        "info": "",
+        "x": 260,
+        "y": 40,
+        "wires": []
+    }
+]
