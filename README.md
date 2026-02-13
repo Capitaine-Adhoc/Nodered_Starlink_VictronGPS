@@ -73,5 +73,5 @@ Once deployed:
 - gRPCurl not found: Manual installation may be required (see below)
 - Starlink API not responding: Check network connection to Starlink router
 
-# For other systems, download from:
-# https://github.com/fullstorydev/grpcurl/releases
+## For other systems, download from:
+-->  https://github.com/fullstorydev/grpcurl/releases
