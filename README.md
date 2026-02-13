@@ -24,6 +24,7 @@ This Node-RED flow collects GPS coordinates from the Starlink API and makes them
 ## Prerequisites
 
 - Node-RED installed (v1.0 or newer recommended)
+- node-red-contrib-grpc extension 
 - Victron energy system with Venus OS (v2.80 or newer)
 - Starlink dish with active or sleep service
 - Enabling "Local Network Access" in Starlink mobile app (version 2022.09.0 or later)
