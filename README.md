@@ -14,9 +14,9 @@ This Node-RED flow collects GPS coordinates from the Starlink API and makes them
 
 ## Features
 
-- Fetches GPS coordinates from Starlink API
+- Fetches GPS coordinates from Starlink API via gRPC
 - Processes latitude, longitude, and altitude data
-- Integrates with Victron energy systems via gRPC
+- Integrates with Victron energy systems via virtual GPS device
 - Debug output for troubleshooting
 - Automatic installation of required dependencies
 - Allow to benefit of Victron's solar forecast
